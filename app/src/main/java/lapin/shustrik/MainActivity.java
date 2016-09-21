@@ -16,7 +16,8 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static String apiUrl = "http://10.0.2.2:88/test.php";
+    public static String apiUrl = "http://192.168.1.38:88/api.php";
+    //public static String apiUrl = "http://10.0.2.2:88/test.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,51 +29,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btn2 = (Button)findViewById(R.id.btnMobileMode);
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
-    }
-
-    public class JsonReaderAsync extends AsyncTask<URL, Void, JSONObject>
-    {
-        @Override
-        protected JSONObject doInBackground(URL... urls) {
-            HttpWorker httpWorker = new HttpWorker();
-            return httpWorker.getJSONFromUrl(urls[0]);
-        }
-
-        @Override
-        protected void onPostExecute(JSONObject json) {
-            String x = null;
-            try {
-                x = json.getString("x");
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return;
-            }
-            //TextView textView = (TextView) findViewById(R.id.textView2);
-            //textView.setText(x);
-        }
-    }
-
-    public class JsonWriterAsync extends AsyncTask<JSONObject, Void, Void>
-    {
-        private URL url;
-
-        public JsonWriterAsync(URL url)
-        {
-            this.url = url;
-        }
-
-        @Override
-        protected Void doInBackground(JSONObject... objs) {
-            HttpWorker httpWorker = new HttpWorker();
-            httpWorker.postJSONToUrl(url, objs[0]);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void dummy) {
-            //TextView textView = (TextView) findViewById(R.id.textView2);
-            //textView.setText("post finished");
-        }
     }
 
     @Override

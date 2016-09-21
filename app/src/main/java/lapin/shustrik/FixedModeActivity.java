@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,13 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
@@ -29,8 +23,14 @@ import java.util.TimerTask;
 
 public class FixedModeActivity extends AppCompatActivity implements View.OnClickListener {
     static MediaPlayer mPlayer = null;
-    static Timer musicTimer = null;
+    Timer musicTimer = null;
+    Timer photoTimer = null;
     Timer requestTimer = null;
+    private Intent mServiceIntent;
+    public static int temp;
+    public static int vl;
+    public static int syr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +43,15 @@ public class FixedModeActivity extends AppCompatActivity implements View.OnClick
         findViewById(R.id.btnStop).setOnClickListener(this);
         findViewById(R.id.btnMakePhoto).setOnClickListener(this);
         requestTimer = new Timer();
-        requestTimer.schedule(new RequestTask((ImageView)findViewById(R.id.imageView)), 0, 10000);
+        mServiceIntent = new Intent(this, PhotoService.class);
+        //mServiceIntent.setData(Uri.parse(dataUrl));
+        photoTimer = new Timer();
+        musicTimer = new Timer();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -58,32 +66,39 @@ public class FixedModeActivity extends AppCompatActivity implements View.OnClick
                     e.printStackTrace();
                 }
                 //mPlayer.start();
-                if (musicTimer == null)
-                    musicTimer = new Timer();
                 musicTimer.schedule(new PlayMusicTask(), 0, 10000);
+                photoTimer.schedule(new SendTask(), 0, 10000);
+                requestTimer.schedule(new RequestTask((ImageView)findViewById(R.id.imageView)), 0, 10000);
                 break;
             case R.id.btnStop:
-                if (mPlayer != null) {
-                    mPlayer.stop();
-                    mPlayer = null;
-                }
-                if (musicTimer != null) {
-                    musicTimer.cancel();
-                    musicTimer = null;
-                }
+                stop();
                 break;
             case R.id.btnMakePhoto:
-                Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, REQUEST_LOAD_PHOTO);
+//                Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(intent, REQUEST_LOAD_PHOTO);
                 //dispatchTakePictureIntent();
                 break;
         }
     }
 
+    private void stop() {
+        if (mPlayer != null) {
+            mPlayer.stop();
+            mPlayer = null;
+        }
+        musicTimer.cancel();
+        musicTimer = new Timer();
+        photoTimer.cancel();
+        photoTimer = new Timer();
+        requestTimer.cancel();
+        requestTimer = new Timer();
+        this.stopService(mServiceIntent);
+    }
+
     static final int REQUEST_TAKE_PHOTO = 1;
     static final int REQUEST_LOAD_PHOTO = 2;
 
-    static String lastFileName;
+    private static String lastFileName;
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -160,51 +175,47 @@ public class FixedModeActivity extends AppCompatActivity implements View.OnClick
 
     class PlayMusicTask extends TimerTask {
         public void run() {
-            if (mPlayer!=null && !mPlayer.isPlaying())
-                mPlayer.start();
+//            if (mPlayer!=null && !mPlayer.isPlaying())
+//                mPlayer.start();
         }
     }
 
-    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
-    public static String bytesToHex(byte[] bytes) {
-        char[] hexChars = new char[bytes.length * 2];
-        for ( int j = 0; j < bytes.length; j++ ) {
-            int v = bytes[j] & 0xFF;
-            hexChars[j * 2] = hexArray[v >>> 4];
-            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+    class SendTask extends TimerTask {
+        public void run() {
+            FixedModeActivity.this.startService(mServiceIntent);
         }
-        return new String(hexChars);
     }
+
 
     class RequestTask extends TimerTask {
 
         private ImageView viewById;
 
-        public RequestTask(ImageView viewById) {
+        public RequestTask(ImageView imageView) {
 
-            this.viewById = viewById;
+            this.viewById = imageView;
         }
 
         public void run() {
-            HttpWorker httpWorker = new HttpWorker();
-            Uri.Builder builder = Uri.parse(MainActivity.apiUrl).buildUpon();
-            builder.appendQueryParameter("action","send_photo");
-            builder.query(MainActivity.apiUrl);
-            try {
-                //ImageView imageView = (ImageView) FixedModeActivity.this.findViewById(R.id.imageView);
-                BitmapDrawable drawable = (BitmapDrawable)viewById.getDrawable();
-                if (drawable == null)
-                    return;
-                Bitmap bitmap = drawable.getBitmap();
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
-                byte[] byteArray = stream.toByteArray();
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("bmp",bytesToHex(byteArray));
-                httpWorker.postJSONToUrl(new URL(builder.build().toString()), jsonObject);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            HttpWorker httpWorker = new HttpWorker();
+//            Uri.Builder builder = Uri.parse(MainActivity.apiUrl).buildUpon();
+//            builder.appendQueryParameter("action","send_photo");
+//            builder.query(MainActivity.apiUrl);
+//            try {
+//                //ImageView imageView = (ImageView) FixedModeActivity.this.findViewById(R.id.imageView);
+//                BitmapDrawable drawable = (BitmapDrawable)viewById.getDrawable();
+//                if (drawable == null)
+//                    return;
+//                Bitmap bitmap = drawable.getBitmap();
+//                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+//                byte[] byteArray = stream.toByteArray();
+//                JSONObject jsonObject = new JSONObject();
+//                jsonObject.put("bmp", Util.bytesToHex(byteArray));
+//                httpWorker.postJSONToUrl(new URL(builder.build().toString()), jsonObject);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         }
     }
 }
