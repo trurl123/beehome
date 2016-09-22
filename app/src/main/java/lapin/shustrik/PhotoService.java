@@ -12,6 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class PhotoService extends Service {
         final SurfaceView preview = new SurfaceView(context);
         SurfaceHolder holder = preview.getHolder();
         // deprecated setting, but required on Android versions prior to 3.0
-        //holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
         holder.addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -79,7 +80,21 @@ public class PhotoService extends Service {
                 } catch (Exception e) {
                     if (camera != null)
                         camera.release();
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        Uri.Builder builder = Uri.parse(MainActivity.apiUrl).buildUpon();
+                        builder.appendQueryParameter("action","send");
+                        jsonObject.put("bmp", "");
+                        jsonObject.put("temp", FixedModeActivity.temp);
+                        jsonObject.put("vl", FixedModeActivity.vl);
+                        jsonObject.put("syr", FixedModeActivity.syr);
+                        JsonWriterAsync jsonWriterAsync = new JsonWriterAsync(new URL(builder.build().toString()));
+                        jsonWriterAsync.execute(jsonObject);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    //throw new RuntimeException(e);
                 }
             }
 

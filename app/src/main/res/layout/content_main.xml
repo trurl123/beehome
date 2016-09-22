@@ -16,13 +16,13 @@
     <TextView
             android:text="Умный дом для хомячка. Выберите режим"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textView"/>
+            android:layout_height="wrap_content" android:id="@+id/textInfo"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Стационарный"
             android:id="@+id/btnFixedMode"
-            android:layout_below="@+id/textView" android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textInfo" android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"/>
     <Button
             android:layout_width="wrap_content"

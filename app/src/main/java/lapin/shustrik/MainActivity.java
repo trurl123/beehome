@@ -16,7 +16,8 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static String apiUrl = "http://192.168.1.38:88/api.php";
+    //public static String apiUrl = "http://192.168.10.167:88/api.php";
+    public static String apiUrl = "http://izhshustrik.ru/api.php";
     //public static String apiUrl = "http://10.0.2.2:88/test.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btn2 = (Button)findViewById(R.id.btnMobileMode);
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
+        Intent myIntent2 = new Intent(this, FixedModeActivity.class);
+        this.startActivity(myIntent2);
     }
 
     @Override
