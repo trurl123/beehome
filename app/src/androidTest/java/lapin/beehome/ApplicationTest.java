@@ -1,4 +1,4 @@
-package lapin.shustrik;
+package lapin.beehome;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

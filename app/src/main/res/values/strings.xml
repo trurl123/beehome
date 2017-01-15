@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Shustrik</string>
+    <string name="app_name">BeeHome</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">Войти</string>
 

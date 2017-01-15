@@ -1,15 +1,12 @@
-package lapin.shustrik;
+package lapin.beehome;
 
-import android.os.AsyncTask;
 import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
 public class HttpWorker {
 

@@ -1,4 +1,4 @@
-package lapin.shustrik;
+package lapin.beehome;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

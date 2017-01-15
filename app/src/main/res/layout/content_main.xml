@@ -11,24 +11,94 @@
         android:paddingBottom="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:showIn="@layout/activity_main"
-        tools:context="lapin.shustrik.MainActivity">
+        tools:context="lapin.beehome.MainActivity">
 
-    <TextView
-            android:text="Умный дом для хомячка. Выберите режим"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/textInfo"/>
-    <Button
-            android:layout_width="wrap_content"
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Стационарный"
-            android:id="@+id/btnFixedMode"
-            android:layout_below="@+id/textInfo" android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Мобильный"
-            android:id="@+id/btnMobileMode"
-            android:layout_below="@+id/btnFixedMode" android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:layout_weight="6"
+            android:baselineAligned="false">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent" android:layout_weight="1">
+            <TextView
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Шум"
+                    android:id="@+id/textView"
+
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" android:layout_weight="1"/>
+            <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/textNoise" android:layout_weight="10"
+                    android:layout_marginRight="3dp"/>
+            <TextView
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="T внутри"
+                    android:id="@+id/textTempInsideLabel"
+
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" android:layout_weight="1"/>
+            <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text=""
+                    android:id="@+id/textTempInside" android:layout_weight="10"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent" android:layout_weight="1">
+            <TextView
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Заслонка"
+                    android:id="@+id/textCoverLabel"
+
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" android:layout_weight="1"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text=""
+                    android:id="@+id/textCover" android:layout_weight="10"/>
+            <TextView
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="T снаружи"
+                    android:id="@+id/textTempOutsideLabel"
+
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content" android:layout_weight="1"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text=""
+                    android:id="@+id/textTempOutside" android:layout_weight="10"/>
+        </LinearLayout>
+    </LinearLayout>
+        <TextView
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Alert"
+                android:id="@+id/textAlert"
+
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" android:layout_weight="1" android:gravity="center"/>
+        <TextView
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Info"
+                android:id="@+id/textInfo"
+
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" android:layout_weight="1"/>
+    </LinearLayout>
 </RelativeLayout>

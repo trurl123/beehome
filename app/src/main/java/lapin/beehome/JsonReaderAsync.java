@@ -1,4 +1,4 @@
-package lapin.shustrik;
+package lapin.beehome;
 
 import android.os.AsyncTask;
 import org.json.JSONException;
@@ -25,7 +25,7 @@ public class JsonReaderAsync extends AsyncTask<URL, Void, JSONObject> {
             e.printStackTrace();
             return;
         }
-        //TextView textView = (TextView) findViewById(R.id.textView2);
-        //textView.setText(x);
+        //TextView infoView = (TextView) findViewById(R.id.textView2);
+        //infoView.setText(x);
     }
 }

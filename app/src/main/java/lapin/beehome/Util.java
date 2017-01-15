@@ -1,4 +1,4 @@
-package lapin.shustrik;
+package lapin.beehome;
 
 /**
  * Created by lapin on 20.09.2016.

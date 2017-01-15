@@ -1,4 +1,4 @@
-package lapin.shustrik;
+package lapin.beehome;
 
 import android.os.AsyncTask;
 import org.json.JSONObject;
@@ -24,7 +24,7 @@ public class JsonWriterAsync extends AsyncTask<JSONObject, Void, Void> {
 
     @Override
     protected void onPostExecute(Void dummy) {
-        //TextView textView = (TextView) findViewById(R.id.textView2);
-        //textView.setText("post finished");
+        //TextView infoView = (TextView) findViewById(R.id.textView2);
+        //infoView.setText("post finished");
     }
 }

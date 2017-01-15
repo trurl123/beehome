@@ -1,26 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="lapin.shustrik">
+          package="lapin.beehome">
 
     <uses-sdk android:minSdkVersion="14"/>
 
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED"/>
     <uses-permission android:name="android.permission.INTERNET"/>
-
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.READ_PROFILE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-
 
     <application
             android:allowBackup="true"
@@ -30,7 +16,7 @@
             android:theme="@style/AppTheme">
         <provider
                 android:name="android.support.v4.content.FileProvider"
-                android:authorities="com.lapin.fileprovider"
+                android:authorities="${applicationId}.contentprovider"
                 android:exported="false"
                 android:grantUriPermissions="true">
             <meta-data
@@ -54,23 +40,8 @@
                 android:parentActivityName=".MainActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value="lapin.shustrik.MainActivity"/>
+                    android:value=".MainActivity"/>
         </activity>
-        <activity
-                android:name=".FixedModeActivity"
-                android:label="@string/title_activity_fixed_mode"
-                android:parentActivityName=".MainActivity"
-                android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="lapin.shustrik.MainActivity"/>
-        </activity>
-
-        <service
-                android:name=".PhotoService"
-                android:enabled="true"
-                android:exported="true">
-        </service>
     </application>
 
 </manifest>
